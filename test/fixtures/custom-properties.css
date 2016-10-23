@@ -4,5 +4,5 @@
 }
 
 .bar {
-  @ref .foo --font-m font-size;
+  @ref .foo, --font-m, font-size;
 }

@@ -1,0 +1,8 @@
+.foo > .nested {
+  font-size: 12px;
+  color: #333;
+}
+
+.bar {
+  @ref .foo > .nested, font-size;
+}

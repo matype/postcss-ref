@@ -11,7 +11,7 @@ This specification defines the @ref rule, which allows an author to refer proper
 ### Using @ref rule
 
 ```
-@ref = @ref <selector-name> <reffered-proper-name> (<new-property-name>)
+@ref = @ref <selector-name>, <reffered-proper-name>( ,<new-property-name>)
 ```
 
 #### Example
