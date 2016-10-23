@@ -1,6 +1,6 @@
 {
   "name": "postcss-ref",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "PostCSS plugin to refer properties from another rule (@ref rule)",
   "main": "index.js",
   "scripts": {
