@@ -5,5 +5,5 @@
 
 .bar {
   color: #fff;
-  @ref .foo color background-color;
+  @ref .foo, color, background-color;
 }

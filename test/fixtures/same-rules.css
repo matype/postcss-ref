@@ -8,5 +8,5 @@
 }
 
 .bar {
-  @ref .foo font-size font-size;
+  @ref .foo, font-size, font-size;
 }
