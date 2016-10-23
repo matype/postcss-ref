@@ -1,0 +1,9 @@
+.foo {
+  font-size: 12px;
+  color: #333;
+}
+
+.bar {
+  @ref .foo font-size;
+  color: #444;
+}

@@ -1,0 +1,8 @@
+.foo {
+  --font-m: 12px;
+  color: #333;
+}
+
+.bar {
+  font-size: var(--font-m);
+}
