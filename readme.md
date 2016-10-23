@@ -23,7 +23,7 @@ This specification defines the @ref rule, which allows an author to refer proper
 }
 
 .bar {
-  @ref .foo font-size;
+  @ref .foo, font-size;
   color: #444;
 }
 ```
@@ -65,7 +65,7 @@ Input:
 }
 
 .bar {
-  @ref .foo font-size;
+  @ref .foo, font-size;
   color: #444;
 }
 ```
@@ -95,7 +95,7 @@ Input:
 }
 
 .bar {
-  @ref .foo --font-m font-size;
+  @ref .foo, --font-m, font-size;
 }
 
 ```
