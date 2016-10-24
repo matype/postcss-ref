@@ -45,6 +45,33 @@ You can pass an option to `postcss-ref` which lets you use `ref` as a function (
 }
 ```
 
+It also works with @media rules
+
+```css
+.foo {
+  font-size: 10px;
+}
+
+@media (min-width: 1602px) {
+  .foo {
+    font-size: 12px;
+    color: #333;
+  }
+}
+
+.bar {
+  @ref @media (min-width: 1602px) .foo, font-size;
+}
+```
+
+or
+
+```css
+.bar {
+  font-size: ref(@media (min-width: 1602px) .foo, font-size);
+}
+```
+
 This allows you to be more verbose with what you are doing.
 
 ## Installation
