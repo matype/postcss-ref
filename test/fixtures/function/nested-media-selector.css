@@ -1,0 +1,14 @@
+.foo {
+  font-size: 10px;
+}
+
+@media (min-width: 1602px) {
+  .foo {
+    font-size: 12px;
+    color: #333;
+  }
+}
+
+.bar {
+  font-size: ref(@media (min-width: 1602px) .foo, font-size);
+}

@@ -29,6 +29,7 @@ compare('same-rules', true)
 compare('specify-property', true)
 compare('custom-properties', true)
 compare('nested-selector', true)
+compare('nested-media-selector', true)
 
 // Functions
 compare('simple', false)
@@ -36,3 +37,4 @@ compare('same-rules', false)
 compare('specify-property', false)
 compare('custom-properties', false)
 compare('nested-selector', false)
+compare('nested-media-selector', false)
