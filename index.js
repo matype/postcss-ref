@@ -55,11 +55,13 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
 
                 var newValue
 
-                wantedSelector.nodes.forEach(function(decl) {
-                    newValue = decl.value
+                wantedSelector.nodes.forEach(function(node) {
+                    if (node.prop === refedProperty) {
+                        newValue = node.value
 
-                    if (isCustomProperty(refedProperty)) {
-                        newValue = 'var(' + refedProperty + ')'
+                        if (isCustomProperty(refedProperty)) {
+                            newValue = 'var(' + refedProperty + ')'
+                        }
                     }
                 })
 
