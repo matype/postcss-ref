@@ -31,28 +31,40 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                 atrule.remove()
             })
         } else {
-            root.walkRules(function (rule) {
-                rule.walkDecls(function (decl) {
-                    if (decl.value.indexOf('ref(') !== -1) {
-                        var match = decl.value.match(/ref\((.*), (.*)\)/)
-                        var selector = match[1]
-                        var refedProperty = match[2]
+            var ruleCache = {}
+            var refCache = []
 
-                        var newValue
+            root.walk(function (node) {
+                var type = node.type
 
-                        root.walkRules(selector, function (rule) {
-                            rule.walkDecls(refedProperty, function (decl) {
-                                newValue = decl.value
-
-                                if (isCustomProperty(refedProperty)) newValue = 'var(' + refedProperty + ')'
-                            })
-                        })
-
-                        decl.value = newValue
+                if (type === 'rule') {
+                    ruleCache[node.selector] = node
+                } else if (type === 'decl') {
+                    if (node.value.indexOf('ref(') !== -1) {
+                        refCache.push(node)
                     }
-                })
+                }
             })
 
+            refCache.forEach(function(decl) {
+                var match = decl.value.match(/ref\((.*), (.*)\)/)
+                var selector = match[1]
+                var refedProperty = match[2]
+
+                var wantedSelector = ruleCache[selector]
+
+                var newValue
+
+                wantedSelector.nodes.forEach(function(decl) {
+                    newValue = decl.value
+
+                    if (isCustomProperty(refedProperty)) {
+                        newValue = 'var(' + refedProperty + ')'
+                    }
+                })
+
+                decl.value = newValue
+            })
         }
     }
 })
