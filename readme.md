@@ -11,7 +11,7 @@ This specification defines the @ref rule, which allows an author to refer proper
 ### Using @ref rule
 
 ```
-@ref = @ref <selector-name>, <reffered-proper-name>( ,<new-property-name>)
+@ref = @ref <selector-name>, <reffered-property-name>( ,<new-property-name>)
 ```
 
 #### Example
@@ -28,9 +28,13 @@ This specification defines the @ref rule, which allows an author to refer proper
 }
 ```
 
-### atRule option
+### `ref()` notation (with `atRule` option)
 
 You can pass an option to `postcss-ref` which lets you use `ref` as a function (`ref()`) instead of an atRule (`@ref`)
+
+```
+ref() = ref(<selector-name>, <reffered-property-name>)
+```
 
 #### Example
 ```css
@@ -44,6 +48,8 @@ You can pass an option to `postcss-ref` which lets you use `ref` as a function (
   color: #444;
 }
 ```
+
+### with media queries
 
 It also works with @media rules
 
@@ -95,7 +101,7 @@ var css = fs.readFileSync("input.css", "utf8")
 
 // process css
 var output = postcss()
-  .use(ref()) # If using the function way change it to `ref({ atRule: false })`
+  .use(ref()) // If using the function way change it to `ref({ atRule: false })`
   .process(css)
   .css
 ```
