@@ -12,14 +12,27 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                 var newProperty = params.length === 3 ? params[2].trim() : refedProperty
 
                 var newValue
-                root.walkRules(selector, function (rule) {
-                    rule.walkDecls(refedProperty, function (decl) {
-                        newValue = decl.value
-                        if (isCustomProperty(refedProperty)) {
-                            newValue = 'var(' + refedProperty + ')'
-                        }
+                if (selector.indexOf('@media') >= 0) {
+                    root.walkAtRules('media', function(rule) {
+                        rule.walkDecls(refedProperty, function (decl) {
+                            newValue = decl.value
+
+                            if (isCustomProperty(refedProperty)) {
+                                newValue = 'var(' + refedProperty + ')'
+                            }
+                        })
                     })
-                })
+                } else {
+                    root.walkRules(selector, function (rule) {
+                        rule.walkDecls(refedProperty, function (decl) {
+                            newValue = decl.value
+
+                            if (isCustomProperty(refedProperty)) {
+                                newValue = 'var(' + refedProperty + ')'
+                            }
+                        })
+                    })
+                }
 
                 if (atrule.parent.type === 'rule') {
                     atrule.parent.insertBefore(atrule, {
@@ -31,13 +44,20 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                 atrule.remove()
             })
         } else {
+            var mediaRuleCache = {}
             var ruleCache = {}
             var refCache = []
 
             root.walk(function (node) {
                 var type = node.type
 
-                if (type === 'rule') {
+                if (type === 'atrule') {
+                    if (node.name === 'media') {
+                        node.nodes.forEach(function(mediaNode) {
+                            mediaRuleCache['@media ' + node.params + ' ' + mediaNode.selector] = mediaNode
+                        })
+                    }
+                } else if (type === 'rule') {
                     ruleCache[node.selector] = node
                 } else if (type === 'decl') {
                     if (node.value.indexOf('ref(') !== -1) {
@@ -51,7 +71,7 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                 var selector = match[1]
                 var refedProperty = match[2]
 
-                var wantedSelector = ruleCache[selector]
+                var wantedSelector = selector.indexOf('@media') >= 0 ? mediaRuleCache[selector] : ruleCache[selector]
 
                 var newValue
 
