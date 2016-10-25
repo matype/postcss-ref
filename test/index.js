@@ -3,24 +3,36 @@ var test = require('tape')
 var postcss = require('postcss')
 var ref = require('..')
 
-function fixture (name) {
-    return fs.readFileSync('test/fixtures/' + name + '.css', 'utf-8').trim()
+function fixture (name, atRule) {
+    var folder = atRule ? 'atrule/' : 'function/'
+
+    return fs.readFileSync('test/fixtures/' + folder + name + '.css', 'utf-8').trim()
 }
 
-function output (name) {
-    return fs.readFileSync('test/fixtures/' + name + '.out.css', 'utf-8').trim()
+function output (name, atRule) {
+    var folder = atRule ? 'atrule/' : 'function/'
+
+    return fs.readFileSync('test/fixtures/' + folder + name + '.out.css', 'utf-8').trim()
 }
 
-function compare (name) {
+function compare (name, atRule) {
     return test(name, function (t) {
-        var res = postcss().use(ref()).process(fixture(name)).css.trim()
-        t.same(res, output(name))
+        var res = postcss().use(ref({ atRule: atRule })).process(fixture(name, atRule)).css.trim()
+        t.same(res, output(name, atRule))
         t.end()
     })
 }
 
-compare('simple')
-compare('same-rules')
-compare('specify-property')
-compare('custom-properties')
-compare('nested-selector')
+// At rules
+compare('simple', true)
+compare('same-rules', true)
+compare('specify-property', true)
+compare('custom-properties', true)
+compare('nested-selector', true)
+
+// Functions
+compare('simple', false)
+compare('same-rules', false)
+compare('specify-property', false)
+compare('custom-properties', false)
+compare('nested-selector', false)

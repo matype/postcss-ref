@@ -28,6 +28,25 @@ This specification defines the @ref rule, which allows an author to refer proper
 }
 ```
 
+### atRule option
+
+You can pass an option to `postcss-ref` which lets you use `ref` as a function (`ref()`) instead of an atRule (`@ref`)
+
+#### Example
+```css
+.foo {
+  font-size: 12px;
+  color: #333;
+}
+
+.bar {
+  font-size: ref(.foo, font-size);
+  color: #444;
+}
+```
+
+This allows you to be more verbose with what you are doing.
+
 ## Installation
 
 ```shell
@@ -49,7 +68,7 @@ var css = fs.readFileSync("input.css", "utf8")
 
 // process css
 var output = postcss()
-  .use(ref())
+  .use(ref()) # If using the function way change it to `ref({ atRule: false })`
   .process(css)
   .css
 ```
@@ -97,7 +116,6 @@ Input:
 .bar {
   @ref .foo, --font-m, font-size;
 }
-
 ```
 
 Output:
@@ -111,7 +129,32 @@ Output:
 .bar {
   font-size: var(--font-m);
 }
+```
 
+Input:
+
+```css
+.foo {
+  --font-m: 12px;
+  color: #333;
+}
+
+.bar {
+  font-size: ref(.foo, --font-m);
+}
+```
+
+Output:
+
+```css
+.foo {
+  --font-m: 12px;
+  color: #333;
+}
+
+.bar {
+  font-size: var(--font-m);
+}
 ```
 
 ## License

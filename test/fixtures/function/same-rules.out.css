@@ -1,0 +1,13 @@
+.foo {
+  font-size: 12px;
+}
+
+.foo {
+  font-size: 14px;
+  color: #333;
+}
+
+.bar {
+  font-size: 14px;
+}
+
