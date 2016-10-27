@@ -58,7 +58,9 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                         })
                     }
                 } else if (type === 'rule') {
-                    ruleCache[node.selector] = node
+                    if (node.parent.type !== 'atrule') {
+                      ruleCache[node.selector] = node
+                    }
                 } else if (type === 'decl') {
                     if (node.value.indexOf('ref(') !== -1) {
                         refCache.push(node)
@@ -85,7 +87,7 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                     }
                 })
 
-                decl.value = newValue
+                decl.value = decl.value.replace(match[0], newValue)
             })
         }
     }
