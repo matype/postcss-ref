@@ -1,3 +1,5 @@
+## Fixed [#7](https://github.com/morishitter/postcss-ref/pull/7)
+
 ## v1.1.0
 
 - Added [#2](https://github.com/morishitter/postcss-ref/issues/2)
