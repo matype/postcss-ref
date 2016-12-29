@@ -23,7 +23,7 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                         })
                     })
                 } else {
-                    root.walkRules(selector, function (rule) {
+                    root.walkRules(new RegExp(selector), function (rule) {
                         rule.walkDecls(refedProperty, function (decl) {
                             newValue = decl.value
 
@@ -73,9 +73,14 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
                 var selector = match[1]
                 var refedProperty = match[2]
 
-                var wantedSelector = selector.indexOf('@media') >= 0 ? mediaRuleCache[selector] : ruleCache[selector]
-
-                var newValue
+                var wantedSelector =
+                    selector.indexOf('@media') >= 0
+                        ? mediaRuleCache[selector]
+                        : ruleCache[
+                                Object.keys(ruleCache).find(function(rule) {
+                                    return new RegExp(selector).test(rule)
+                                })
+                            ]
 
                 wantedSelector.nodes.forEach(function(node) {
                     if (node.prop === refedProperty) {
