@@ -40,3 +40,4 @@ compare('custom-properties', false)
 compare('nested-selector', false)
 compare('nested-media-selector', false)
 compare('multiple-selector', false)
+compare('nested-call', false);

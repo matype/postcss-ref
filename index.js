@@ -69,7 +69,7 @@ module.exports = postcss.plugin('postcss-ref', function (opts) {
             })
 
             refCache.forEach(function(decl) {
-                var match = decl.value.match(/ref\((.*), (.*)\)/)
+                var match = decl.value.match(/ref\((.*), ([^\)]*)\)/)
                 var selector = match[1]
                 var refedProperty = match[2]
 
