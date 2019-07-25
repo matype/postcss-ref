@@ -1,0 +1,7 @@
+.tooltip {
+  background-color: #ccc;
+}
+
+.tooltip-marker {
+  background-image: svg-load("marker.svg", fill: ref(.tooltip, background-color));
+}
