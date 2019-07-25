@@ -1,3 +1,7 @@
+## v1.2.1
+
+- Fix nested function call [#8](https://github.com/morishitter/postcss-ref/pull/9)
+
 ## v1.2.0
 
 - Added [#8](https://github.com/morishitter/postcss-ref/pull/8)
