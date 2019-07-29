@@ -31,6 +31,7 @@ compare('custom-properties', true)
 compare('nested-selector', true)
 compare('nested-media-selector', true)
 compare('multiple-selector', true)
+compare('selector-with-escaped-chars', true);
 
 // Functions
 compare('simple', false)
@@ -41,3 +42,4 @@ compare('nested-selector', false)
 compare('nested-media-selector', false)
 compare('multiple-selector', false)
 compare('nested-call', false);
+compare('selector-with-escaped-chars', false);
