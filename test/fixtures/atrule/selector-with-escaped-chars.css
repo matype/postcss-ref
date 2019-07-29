@@ -1,0 +1,7 @@
+.a\.b {
+  color: #333;
+}
+
+.c {
+  @ref .a\.b, color;
+}
